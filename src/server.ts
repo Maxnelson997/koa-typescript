@@ -2,10 +2,11 @@ import Koa from "koa";
 import bodyParser from "koa-bodyparser";
 import cors from "koa2-cors";
 import logger from "koa-logger";
+import Router from "koa-router";
 
 const app = new Koa();
 
-const PORT = process.env.PORT || 7654;
+const PORT = process.env.PORT || 8080;
 
 app.use(bodyParser());
 app.use(
@@ -14,6 +15,20 @@ app.use(
   })
 );
 app.use(logger());
+
+const router = new Router();
+
+router.get('/', async (ctx) => {
+    try {
+        ctx.body = {
+            success: "success"
+        };
+    } catch (err) {
+        console.error(err)
+    }
+})
+
+app.use(router.routes());
 
 const server = app
   .listen(PORT, async () => {
