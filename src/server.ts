@@ -3,7 +3,7 @@ import bodyParser from "koa-bodyparser";
 import cors from "koa2-cors";
 import logger from "koa-logger";
 import healthcheck from "./routes/healthcheck";
-import config from './config';
+import { config } from './config';
 
 const app = new Koa();
 const PORT = config.port;
