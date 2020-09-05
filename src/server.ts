@@ -3,7 +3,8 @@ import bodyParser from "koa-bodyparser";
 import cors from "koa2-cors";
 import logger from "koa-logger";
 import healthcheck from "./routes/healthcheck";
-import { config } from './config';
+import skills from "./routes/skills";
+import { config } from "./config";
 
 const app = new Koa();
 const PORT = config.port;
@@ -17,6 +18,7 @@ app.use(
 app.use(logger());
 
 app.use(healthcheck.routes());
+app.use(skills.routes());
 
 const server = app
   .listen(PORT, async () => {
