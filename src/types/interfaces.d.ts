@@ -7,9 +7,9 @@ interface IConfig {
 }
 
 interface IStorage {
-  get: (list_name: string) => string[];
-  add: (list_name: string, item: string) => boolean;
-  remove: (list_name: string, item: string) => boolean;
+  get: (list_name: string) => Promise<string[]>;
+  add: (list_name: string, item: string) => Promise<boolean>;
+  remove: (list_name: string, item: string) => Promise<boolean>;
 }
 
 export { IConfig, IStorage };
