@@ -5,6 +5,7 @@ const redis = require("redis");
 const client = redis.createClient(config.redis);
 
 const { promisify } = require("util");
+// import { promisify } from 'util';
 
 const rpush = promisify(client.rpush).bind(client);
 const lrem = promisify(client.lrem).find(client);

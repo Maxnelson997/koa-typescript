@@ -34,7 +34,7 @@ describe("routes/skills", () => {
   });
 
   it(`should keep track of all skills added to the list'`, async () => {
-    const data1 = { skill: "Half Life 3" };
+    const data1 = { skill: "Docker" };
     const response1 = await request(server)
       .post("/skills")
       .send(data1);
@@ -45,7 +45,7 @@ describe("routes/skills", () => {
       skills: [data1.skill]
     });
 
-    const data2 = { skill: "FSX 2020" };
+    const data2 = { skill: "Vue" };
     const response2 = await request(server)
       .post("/skills")
       .send(data2);
