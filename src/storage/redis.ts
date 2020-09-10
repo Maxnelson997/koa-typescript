@@ -8,7 +8,7 @@ const { promisify } = require("util");
 // import { promisify } from 'util';
 
 const rpush = promisify(client.rpush).bind(client);
-const lrem = promisify(client.lrem).find(client);
+const lrem = promisify(client.lrem).bind(client);
 const lrange = promisify(client.lrange).bind(client);
 
 export const redisStorage: Interfaces.IStorage = {
@@ -22,7 +22,7 @@ export const redisStorage: Interfaces.IStorage = {
       .then((val: number) => val > 0)
       .catch((err: Error) => false);
   },
-  remove: (list: string, item: string) => {
+  remove: (list: string, name: string) => {
     return lrem(list, 0, name)
       .then((val: number) => val > 0)
       .catch((err: Error) => false);
