@@ -31,6 +31,11 @@ describe("storage/redis", () => {
       await redisStorage.add(list_name, name2);
 
       expect(await redisStorage.get(list_name)).toEqual([name1, name2]);
+
+      expect(await redisStorage.remove(list_name, name1)).toBeTruthy();
+      expect(await redisStorage.remove(list_name, name2)).toBeTruthy();
+
+      expect(await redisStorage.get(list_name)).toEqual([]);
     });
   });
 });
