@@ -17,13 +17,13 @@ export const redisStorage: Interfaces.IStorage = {
       .then((val: string[]) => val)
       .catch((err: Error) => []);
   },
-  add: (list: string, name: string) => {
-    return rpush(list, name)
+  add: (list: string, skill: string) => {
+    return rpush(list, skill)
       .then((val: number) => val > 0)
       .catch((err: Error) => false);
   },
-  remove: (list: string, name: string) => {
-    return lrem(list, 0, name)
+  remove: (list: string, skill: string) => {
+    return lrem(list, 0, skill)
       .then((val: number) => val > 0)
       .catch((err: Error) => false);
   }

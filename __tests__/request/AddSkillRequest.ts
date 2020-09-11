@@ -10,14 +10,14 @@ describe("request/AddSkillRequest", () => {
   });
 
   it(`has the expected class properties`, async () => {
-    addSkillRequest.name = "A skill name here";
-    expect(addSkillRequest.name).toBeDefined();
+    addSkillRequest.skill = "A skill skill here";
+    expect(addSkillRequest.skill).toBeDefined();
   });
 
-  describe(`'name' validation`, () => {
+  describe(`'skill' validation`, () => {
     it("is valid", async () => {
       for (let i = 1; i <= 20; ++i) {
-        addSkillRequest.name = "x".repeat(i);
+        addSkillRequest.skill = "x".repeat(i);
         expect(await validate(addSkillRequest, validatorOptions)).toHaveLength(
           0
         );
@@ -25,12 +25,12 @@ describe("request/AddSkillRequest", () => {
     });
 
     it("must have a length of 1 character or greater", async () => {
-      addSkillRequest.name = "";
+      addSkillRequest.skill = "";
       expect(await validate(addSkillRequest, validatorOptions)).toHaveLength(1);
     });
 
     it("must have a length of 20 characters or fewer", async () => {
-      addSkillRequest.name = "testing is dope mane.".repeat(21);
+      addSkillRequest.skill = "testing is dope mane.".repeat(21);
       expect(await validate(addSkillRequest, validatorOptions)).toHaveLength(1);
     });
   });

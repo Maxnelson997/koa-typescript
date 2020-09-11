@@ -56,4 +56,29 @@ describe("routes/skills", () => {
       skills: [data1.skill, data2.skill]
     });
   });
+
+  it("should return a validation failure if the skill data is incorrect", async () => {
+    const response = await request(server)
+      .post("/skills")
+      .send({ skill: "" });
+
+    expect(response.status).toEqual(400);
+    expect(response.type).toEqual("application/json");
+    expect(response.body).toEqual({
+      status: "error",
+      data: [
+        {
+          target: {
+            skill: ""
+          },
+          value: "",
+          property: "skill",
+          children: [],
+          constraints: {
+            length: "skill must be longer than or equal to 1 characters"
+          }
+        }
+      ]
+    });
+  });
 });
