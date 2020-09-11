@@ -36,11 +36,16 @@ router.post("/skills", async (ctx: Context) => {
 
     console.log("nice storage", storage);
 
+    const store = storage.redisStorage();
+    const list_name = "my_skill_list";
+
+    await store.add(list_name, addSkillRequest.skill);
+
     ctx.status = 201;
     ctx.body = {
       skills:
         // ctx.request.body.skill,
-        await storage.redisStorage().get("my_skill_list")
+        await store.get(list_name)
     };
   } catch (err) {
     console.error(err);

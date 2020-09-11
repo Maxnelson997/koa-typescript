@@ -51,7 +51,22 @@ describe("routes/skills", () => {
     });
   });
 
-  xit(`should keep track of all skills added to the list'`, async () => {
+  it(`should keep track of all skills added to the list'`, async () => {
+    const list_of_skills: string[] = [];
+    const mockGet = jest.fn((list: string) => Promise.resolve(list_of_skills));
+    const mockAdd = jest.fn((list: string, name: string) => {
+      list_of_skills.push(name);
+      return list_of_skills.length > 0;
+    });
+
+    storage.redisStorage = jest.fn(() => {
+      return {
+        get: mockGet,
+        add: mockAdd,
+        remove: (list: string) => Promise.resolve(false)
+      };
+    });
+
     const data1 = { skill: "Docker" };
     const response1 = await request(server)
       .post("/skills")
