@@ -2,6 +2,7 @@ import { Context } from "koa";
 import Router from "koa-router";
 import { AddSkillRequest } from "../request/AddSkillRequest";
 import { validate } from "class-validator";
+import * as storage from "../storage/redis";
 // import { redisStorage } from "../../src/storage/redis";
 
 const router = new Router();
@@ -33,9 +34,13 @@ router.post("/skills", async (ctx: Context) => {
       return ctx;
     }
 
+    console.log("nice storage", storage);
+
     ctx.status = 201;
     ctx.body = {
-      skills: [ctx.request.body.skill]
+      skills:
+        // ctx.request.body.skill,
+        await storage.redisStorage().get("my_skill_list")
     };
   } catch (err) {
     console.error(err);

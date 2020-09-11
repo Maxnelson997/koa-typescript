@@ -1,6 +1,9 @@
 import server from "../../src/server";
 import request from "supertest";
+import * as storage from "../../src/storage/redis";
 
+jest.mock("../../src/storage/redis");
+console.log(storage);
 afterEach(done => {
   server.close();
   done();
@@ -9,18 +12,31 @@ afterEach(done => {
 describe("routes/skills", () => {
   const skills = [
     "Agile Development",
-    "React",
-    "Webpack",
-    "Babel",
-    "ESLint",
-    "Angular",
-    "Vue",
-    "Redux",
-    "Hooks"
+    "React"
+    // "Webpack",
+    // "Babel",
+    // "ESLint",
+    // "Angular",
+    // "Vue",
+    // "Redux",
+    // "Hooks"
   ];
 
   skills.forEach((skill: string) => {
     it(`should allow adding a skill to the list - ${skill}`, async () => {
+      // storage.redisStorage = jest.fn(() => {
+
+      // });
+      const mockGet = jest.fn((list: string) => Promise.resolve([skill]));
+
+      storage.redisStorage = jest.fn(() => {
+        return {
+          get: mockGet,
+          add: (list: string) => Promise.resolve(false),
+          remove: (list: string) => Promise.resolve(false)
+        };
+      });
+
       const response = await request(server)
         .post("/skills")
         .send({ skill });
@@ -30,10 +46,12 @@ describe("routes/skills", () => {
       expect(response.body).toEqual({
         skills: [skill]
       });
+
+      expect(mockGet).toHaveBeenCalled();
     });
   });
 
-  it(`should keep track of all skills added to the list'`, async () => {
+  xit(`should keep track of all skills added to the list'`, async () => {
     const data1 = { skill: "Docker" };
     const response1 = await request(server)
       .post("/skills")
@@ -57,7 +75,7 @@ describe("routes/skills", () => {
     });
   });
 
-  it("should return a validation failure if the skill data is incorrect", async () => {
+  xit("should return a validation failure if the skill data is incorrect", async () => {
     const response = await request(server)
       .post("/skills")
       .send({ skill: "" });
