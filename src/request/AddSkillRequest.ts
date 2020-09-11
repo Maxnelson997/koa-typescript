@@ -1,7 +1,3 @@
-import { IsString, Length } from "class-validator";
+import { SkillRequest } from "./SkillRequest";
 
-export class AddSkillRequest {
-  @IsString()
-  @Length(1, 20)
-  skill!: string;
-}
+export class AddSkillRequest extends SkillRequest {}
